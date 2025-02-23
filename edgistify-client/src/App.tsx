@@ -7,6 +7,7 @@ import NewLaunches from './components/NewLaunches.tsx'
 import Support from './components/Support.tsx'
 import AboutUs from './components/AboutUs.tsx'
 import NavBar from './components/NavBar.tsx'
+import Footer from './components/Footer.tsx'
 
 const App = () => {
   return (
@@ -20,7 +21,8 @@ const App = () => {
         <Route path="/newlaunches" element={<NewLaunches />} />
         <Route path="/support" element={<Support />} />
         <Route path="/about" element={<AboutUs />} />
-      </Routes>   
+      </Routes>
+      <Footer/>   
     </>
   )
 }

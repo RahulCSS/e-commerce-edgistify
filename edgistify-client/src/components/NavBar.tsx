@@ -1,11 +1,19 @@
 import { NavLink } from "react-router-dom"
+import { UserOutlined,
+          ShoppingCartOutlined,
+          SearchOutlined,
+          BellOutlined,
+        } from '@ant-design/icons';
 
 const NavBar = () => {
   return (
-    <div>
-      <NavLink to="/">Edgistify</NavLink>
+    <div className="flex justify-between items-center h-16 px-16 
+                    bg-transparent text-black relative shadow-sm ">
+      <div className="text-4xl font-semibold px-4">
+        <NavLink to="/" >Edgistify</NavLink>
+      </div>
       <nav>
-        <ul>
+        <ul className="flex space-x-16 text-xl px-2">
           <li>
             <NavLink to="/products">Products</NavLink>
           </li>
@@ -19,7 +27,13 @@ const NavBar = () => {
             <NavLink to="/about">About Us</NavLink>
           </li>
         </ul>
-        </nav>
+      </nav>
+      <div className="flex space-x-4 text-2xl px-2">
+        <SearchOutlined className="cursor-pointer"/>
+        <ShoppingCartOutlined className="cursor-pointer"/>
+        <UserOutlined className="cursor-pointer"/>
+        <BellOutlined className="cursor-pointer ml-4"/>
+      </div>
     </div>
   )
 }
