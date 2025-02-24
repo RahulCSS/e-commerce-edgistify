@@ -11,7 +11,7 @@ import Footer from './components/Footer.tsx'
 
 const App = () => {
   return (
-    <>
+    <div className="relative">
       <NavBar/>
       <Routes>
         <Route index element={<Home />} />
@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
       </Routes>
       <Footer/>   
-    </>
+    </div>
   )
 }
 

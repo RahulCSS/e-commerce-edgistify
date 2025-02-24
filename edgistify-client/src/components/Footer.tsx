@@ -6,7 +6,7 @@ import { InstagramOutlined,
 
 const Footer = () => {
   return (
-    <div>
+    <div className="fixed bottom-0">
         <div className="flex justify-center h-96 px-16 
                         bg-white text-black gap-8 border-t-2 border-gray-300">
             <div className="text-6xl font-semibold pt-4">
@@ -75,7 +75,7 @@ const Footer = () => {
             <div>
             <ul className="text-lg space-y-4 pt-2 w-56">
                     <li>
-                        <p className="text-xl font-semibold pb-4">Socail Media</p>
+                        <p className="text-xl font-semibold pb-4">Social Media</p>
                     </li>
                     <li className="flex gap-4">
                         <InstagramOutlined className="text-3xl"/>
