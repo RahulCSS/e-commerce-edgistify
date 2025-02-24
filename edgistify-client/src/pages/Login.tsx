@@ -1,5 +1,6 @@
 import type { FormProps, FormInstance } from 'antd';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 const Login = () => {
   
@@ -50,10 +51,19 @@ const Login = () => {
 
     <Form.Item label={null}>
       <Button type="primary" htmlType="submit">
-        Submit
+        Log in
       </Button>
     </Form.Item>
   </Form>
+  <p className="text-gray-500 mb-4">Not a Member, 
+    <NavLink to="/register" 
+            className="text-blue-500 hover:text-blue-700 hover:underline 
+            focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Signup 
+            </NavLink> 
+            to experience us
+            </p>
   </div>
   </div>
   );
