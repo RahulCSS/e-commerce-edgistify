@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import { Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { UserOutlined,
@@ -8,41 +8,45 @@ import { UserOutlined,
           ShoppingOutlined,
           LoginOutlined,
         } from '@ant-design/icons';
-const NavBar = () => {
-  
-const cartItems: MenuProps['items'] = [{
-  key: 'emptycart',
-  label: (
-    <div className="flex flex-col items-center justify-center p-4 text-center">
-      <div>Your cart is empty</div>
-      <ShoppingOutlined className=" text-2xl"/>
-    </div>
-  )
-}];
 
-const userItems: MenuProps['items']  = [{
-    key: 'welcome',
-    label: 'Welcome, User',
-  },
-  {
-    type: 'divider',
-  },
-  {
-    key: 'myaccount',
-    label: 'My Account',
-    icon: <UserOutlined />,
-  },
-  {
-    key: 'orders',
-    label: 'Orders',
-    icon: <ShoppingCartOutlined />,
-  },
-  {
-    key: 'Sign in',
-    label: 'Sign in',
-    icon: <LoginOutlined />,
-  }
-];
+const NavBar = () => {
+  const navigate = useNavigate();
+  const cartItems: MenuProps['items'] = [{
+    key: 'emptycart',
+    label: (
+      <div className="flex flex-col items-center justify-center p-4 text-center">
+        <div>Your cart is empty</div>
+        <ShoppingOutlined className=" text-2xl"/>
+      </div>
+    )
+  }];
+
+  const userItems: MenuProps['items']  = [{
+      key: 'welcome',
+      label: 'Welcome, User',
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'myaccount',
+      label: 'My Account',
+      icon: <UserOutlined />,
+    },
+    {
+      key: 'orders',
+      label: 'Orders',
+      icon: <ShoppingCartOutlined />,
+    },
+    {
+      key: 'Sign in',
+      label: 'Sign in',
+      icon: <LoginOutlined />,
+      onClick: () => {
+        navigate('/login');
+      }
+    }
+  ];
 
   return (
     <div className="flex justify-between items-center h-16 px-16 

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home.tsx'
 import Login from './pages/Login.tsx'
 import Register from './pages/Register.tsx'
@@ -10,9 +10,13 @@ import NavBar from './components/NavBar.tsx'
 import Footer from './components/Footer.tsx'
 
 const App = () => {
+  const location = useLocation();
+
+  const hideNavFootpaths = ['/login', '/register'];
+  const hideNavbarFooter = hideNavFootpaths.includes(location.pathname);;
   return (
-    <div className="relative">
-      <NavBar/>
+    <>
+      {!hideNavbarFooter && <NavBar/>}
       <Routes>
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -22,8 +26,8 @@ const App = () => {
         <Route path="/support" element={<Support />} />
         <Route path="/about" element={<AboutUs />} />
       </Routes>
-      <Footer/>   
-    </div>
+      {!hideNavbarFooter && <Footer/>} 
+    </>
   )
 }
 
