@@ -1,17 +1,53 @@
-import type { FormProps, FormInstance } from 'antd';
-import { Button, Checkbox, Form, Input } from 'antd';
+import type { FormProps } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
+import  {RegisterUser}  from '../apicalls/user';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  interface RegisterFormValues {
+    name: string;
+    email: string;
+    password: string;
+    confirmpassword: string;
+    remember: boolean;
+  }
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
   
-  const onFinish: FormProps<FormInstance>['onFinish'] = (values) => {
-    console.log('Success:', values);
+  const onFinish: FormProps<RegisterFormValues>['onFinish'] = async (values) => {
+    const { confirmpassword ,remember, ...filtered } = values;
+    const filteredValues = { ...filtered };
+    try{
+      messageApi.open({
+        type: 'loading',
+        content: 'Action in progress...',
+        duration: 0.5,
+      });
+      const response = await RegisterUser(filteredValues); 
+      if(response.success){
+            messageApi.success('Registration Successful!, You can login now');
+            setTimeout(() => {
+              navigate('/login');
+            },1000);
+          }else{
+            messageApi.error(response.message || 'An error occurred');
+      }
+    }catch(error){
+      messageApi.error('An unexpected error occurred. Please try again.');
+      console.log(error);
+       
+    }
+      form.resetFields();
   };
-  const onFinishFailed: FormProps<FormInstance>['onFinishFailed'] = (errorInfo) => {
+
+  const onFinishFailed: FormProps<RegisterFormValues>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
   
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    {contextHolder}
     <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-lg">
     <h1 className="text-2xl font-semibold mb-4">Edgistify</h1>
     <p className="text-gray-500 mb-4">Register to experience us</p>
@@ -27,7 +63,7 @@ const Register = () => {
   >
     <Form.Item
           label="Username"
-          name="username"
+          name="name"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
           <Input placeholder="Full name" />
@@ -53,7 +89,7 @@ const Register = () => {
 
     <Form.Item
         label="Confirm Password"
-        name="password2"
+        name="confirmpassword"
         dependencies={['password']}
         rules={[
           {
@@ -72,7 +108,7 @@ const Register = () => {
         <Input.Password />
       </Form.Item>
 
-    <Form.Item name="remember" valuePropName="unchecked" label={null}
+    <Form.Item name="remember" valuePropName="checked" label={null}
       rules={[{ required: true, message: 'Accept terms & conditions' }]}>
       <Checkbox>Agree to Terms & Conditions </Checkbox>
     </Form.Item>

@@ -47,11 +47,11 @@ const getProduct = async (req, res) =>{
 // Update a product
 const updateProduct = async (req,res) =>{
     const { id } = req.params;
-    const {name, description, price, stock, category, subcategory, imageUrl} = req.body;
+    const {name, description, price, quantity, category, imageUrl} = req.body;
     try {
         const updatedProduct = await productModel.findByIdAndUpdate(
             id,
-            { name, description, price, stock, category, imageUrl }, 
+            { name, description, price, quantity, category, imageUrl }, 
             { new: true, runValidators: true });
         if (!updatedProduct) {
             return res.status(404).json({ success: false, message: 'Product not found' });

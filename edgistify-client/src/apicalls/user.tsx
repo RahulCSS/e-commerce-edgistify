@@ -2,9 +2,11 @@ import {axiosInstance} from ".";
 const token = localStorage.getItem('token');
 
 //Register
-export const RegisterUser = async (payload) => {
+export const RegisterUser = async (payload:any) => {
     try{
         const response = await axiosInstance.post("/api/user/register",payload);
+        console.log(payload);
+        console.log(response);
         return response.data;
     }catch(err){
         console.log(err);
@@ -13,7 +15,7 @@ export const RegisterUser = async (payload) => {
 };
 
 //Login
-export const LoginUser = async (payload) => {
+export const LoginUser = async (payload:any) => {
     try{
         const response = await axiosInstance.post("/api/user/login",payload);
         return response.data;
@@ -37,7 +39,7 @@ export const GetCurrentUser = async () => {
 };
 
 //Update Cart
-export const UpdateCart = async (id, payload) => {
+export const UpdateCart = async (id:number, payload:any) => {
     try{
         const response = await axiosInstance.put(`/api/user/updatecart/${id}`,{cart : payload});
         return response.data;

@@ -10,19 +10,9 @@ export const GetAllProduct = async () => {
     }
 };
 
-//Get all product by seller
-export const GetProduct = async (id) => {
-    try{
-        const response = await axiosInstance.get(`/api/product/getproduct/${id}`);
-        return response.data;
-    }catch(err){
-        return err;
-    }
-};
-
 
 //Add product
-export const AddProduct = async (payload) => {
+export const AddProduct = async (payload: any) => {
     try{
         const response = await axiosInstance.post("/api/product/addproduct",payload);
         return response.data;
@@ -32,7 +22,7 @@ export const AddProduct = async (payload) => {
 };
 
 //Update product
-export const UpdateProduct = async (id, payload) => {
+export const UpdateProduct = async (id: number, payload: any) => {
     try{
         const response = await axiosInstance.put(`/api/product/updateproduct/${id}`, payload);
         return response.data;
@@ -42,7 +32,7 @@ export const UpdateProduct = async (id, payload) => {
 };
 
 //Delete product
-export const DeleteProduct = async (id) => {
+export const DeleteProduct = async (id:number) => {
     try{
         const response = await axiosInstance.delete(`/api/product/deleteproduct/${id}`);
         return response.data;
@@ -52,11 +42,11 @@ export const DeleteProduct = async (id) => {
 };
 
 //Update product status
-export const UpdateStatus = async (id, payload) => {
+export const UpdateStatus = async (id:number, payload:any) => {
     try {
        const response = await axiosInstance.patch(`/api/product/updatestatus/${id}`, {status : payload});
         return response.data;
-    }catch{
+    }catch(err){
         return err;
     }
    };

@@ -1,11 +1,36 @@
 import type { FormProps, FormInstance } from 'antd';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { LoginUser } from '../apicalls/user';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  
-  const onFinish: FormProps<FormInstance>['onFinish'] = (values) => {
-    console.log('Success:', values);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+
+  const onFinish: FormProps<FormInstance>['onFinish'] = async (values) => {
+        try{
+          messageApi.open({
+            type: 'loading',
+            content: 'Action in progress...',
+            duration: 0.5,
+          });
+          const response = await LoginUser(values); 
+          if(response.success){
+                messageApi.success('Login Successful!');
+                localStorage.setItem('token', response.userData.token);
+                setTimeout(() => {
+                  navigate('/');
+                },1000);
+              }else{
+                messageApi.error(response.message || 'An error occurred');
+          }
+        }catch(error){
+          messageApi.error('An unexpected error occurred. Please try again.');
+          console.log(error);
+        }
+          form.resetFields();
   };
   const onFinishFailed: FormProps<FormInstance>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -13,6 +38,7 @@ const Login = () => {
   
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    {contextHolder}
     <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-lg">
     <h1 className="text-2xl font-semibold mb-4">Edgistify</h1>
     <p className="text-gray-500 mb-4">Enter your email and password to login</p>
@@ -44,7 +70,7 @@ const Login = () => {
       <Input.Password />
     </Form.Item>
 
-    <Form.Item name="remember" valuePropName="unchecked" label={null}
+    <Form.Item name="remember" valuePropName="checked" label={null}
       rules={[{ required: true, message: 'Please Check' }]}>
       <Checkbox>I'm not a bot</Checkbox>
     </Form.Item>
